@@ -1,0 +1,76 @@
+#include <Servo.h>// import the servo library
+#include <AFMotor.h>
+Servo name_servo;
+int servo_position=0;
+void setup() 
+{
+  name_servo.attach (A0);
+  pinMode(A0, OUTPUT); // set all the pins as output
+  pinMode(5, OUTPUT); 
+  pinMode(6, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  Serial.begin(9600); // connect to BT module
+}
+
+void loop() 
+{
+  int Left = digitalRead(7);
+  int Right = digitalRead(8);
+  forward();delay(5000);
+  right();delay(5000);
+  left();delay(5000);
+  backward();delay(5000);
+  finish();delay(1000);
+  kick();
+  kick();
+  kick();delay(5000);
+}
+void forward()
+{
+  digitalWrite(5,HIGH);
+  digitalWrite(6,LOW);
+  digitalWrite(9,HIGH);
+  digitalWrite(10,LOW);
+}
+void backward()
+{
+  digitalWrite(5,LOW);
+  digitalWrite(6,HIGH);
+  digitalWrite(9,LOW);
+  digitalWrite(10,HIGH);
+}
+void right()
+{
+  digitalWrite(5,HIGH);
+  digitalWrite(6,LOW);
+  digitalWrite(9,LOW);
+  digitalWrite(10,HIGH);
+}
+void left()
+{
+  digitalWrite(5,LOW);
+  digitalWrite(6,HIGH);
+  digitalWrite(9,HIGH);
+  digitalWrite(10,LOW);
+}
+void finish()
+{
+  digitalWrite(5,LOW);
+  digitalWrite(6,LOW);
+  digitalWrite(9,LOW);
+  digitalWrite(10,LOW);
+}
+void kick()
+{
+ for (servo_position = 100; servo_position <=180; servo_position +=10)
+ {
+    name_servo.write(servo_position);
+    delay(10);
+ }
+ for (servo_position=180; servo_position >= 0; servo_position -=1)
+ {
+  name_servo.write(servo_position);
+  delay(10);
+ }
+}
